@@ -373,7 +373,6 @@ function drawSkeleton(){
 	//right foot
 	Render.Line(x+155+250,y+282,x+167+250,y+320,color);
 }
-
 function menu(){
 	if(!UI.IsMenuOpen())return;
 	checkbox_create("Rainbow",x+50,y+50,1);
@@ -397,6 +396,9 @@ function setupUI(){
 	UI.AddCheckbox("Preview Visuals");
 	UI.AddSliderInt("Fakelag key", 0, 0xA3);
 	UI.AddSliderInt("Doorspammer", 0, 0xA3);
+	var screensize = Global.GetScreenSize();
+	UI.AddSliderInt("[]X", 0, screensize[0]);
+	UI.AddSliderInt("[]Y", 0, screensize[1]);
 	//UI.AddHotkey("Fakelag key");
 	//UI.AddHotkey("Doorspammer");
 	checkbox_state[1] = get("Rainbow");
@@ -407,6 +409,8 @@ function setupUI(){
 	hotkey_key[6] = get("Fakelag key");
 	hotkey_key[7] = get("Doorspammer");
 	checkbox_state[9] = get("Preview Visuals");
+	x = get("[]X");
+	y = get("[]Y");
 }
 function setUIValues(){
 	UI.SetValue("Rainbow",checkbox_state[1])
@@ -418,6 +422,8 @@ function setUIValues(){
 	UI.SetValue("Doorspammer",hotkey_key[8]);
 	UI.SetValue("Doorspamonkey",checkbox_state[7]);
 	UI.SetValue("Preview Visuals", checkbox_state[9]);
+	UI.SetValue("[]X",x);
+	UI.SetValue("[]Y",y);
 }
 function main(){
 	setupUI();
@@ -429,12 +435,11 @@ function main(){
 	Global.RegisterCallback("Draw", "drawFlags");
 	Global.RegisterCallback("Draw", "drawSkeleton");
 	Global.RegisterCallback("Draw", "drawPosition");
-	Global.RegisterCallback("Draw","drawPosition");
 	Global.RegisterCallback("Draw", "rainbow_bar");
 	Global.RegisterCallback("CreateMove","radiospammer");
 	Global.RegisterCallback("CreateMove","doorspam");
 	Global.RegisterCallback("CreateMove","fakelagonkey");
-	Global.RegisterCallback("CreateMove","setUIValues");
+	Global.RegisterCallback("Draw","setUIValues");
 	Global.RegisterCallback("Draw", "draw_gs_watermark");
 	Global.RegisterCallback("Draw","menu");
 }main();
