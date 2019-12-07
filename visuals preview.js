@@ -35,7 +35,7 @@ function drawBox(){if(!UI.IsMenuOpen())return;
 }
 function drawName(){if(!UI.IsMenuOpen())return;
 	if(!getVisual("Name"))return;
-	Render.String(get(x)+125,get(y)+50,1,"Jerry",[255,255,255,255],8);
+	Render.String(get(x)+125,get(y)+50,1,"Jerry",getVisualColor("Name"),8);
 }
 function drawHealth(){if(!UI.IsMenuOpen())return;
 	if(!getVisual("Health")) return;
