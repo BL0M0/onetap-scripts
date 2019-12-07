@@ -386,7 +386,41 @@ function menu(){
 	hotkey_create(x+155,y+134,6);
 	hotkey_create(x+170,y+154,8);
 }
+function setupUI(){
+	UI.AddLabel("[VexatiousCheff's GUI Stuff] (CONFIGURE FROM GUI)")
+	UI.AddCheckbox("Rainbow");
+	UI.AddCheckbox("Radiospammer");
+	UI.AddCheckbox("GS Watermark");
+	UI.AddCheckbox("GS Bar");
+	UI.AddCheckbox("Fakelagonkey");
+	UI.AddCheckbox("Doorspamonkey");
+	UI.AddCheckbox("Preview Visuals");
+	UI.AddSliderInt("Fakelag key", 0, 0xA3);
+	UI.AddSliderInt("Doorspammer", 0, 0xA3);
+	//UI.AddHotkey("Fakelag key");
+	//UI.AddHotkey("Doorspammer");
+	checkbox_state[1] = get("Rainbow");
+	checkbox_state[2] = get("Radiospammer");
+	checkbox_state[3] = get("GS Watermark");
+	checkbox_state[4] = get("GS Bar");
+	checkbox_state[5] = get("Fakelagonkey");
+	hotkey_key[6] = get("Fakelag key");
+	hotkey_key[7] = get("Doorspammer");
+	checkbox_state[9] = get("Preview Visuals");
+}
+function setUIValues(){
+	UI.SetValue("Rainbow",checkbox_state[1])
+	UI.SetValue("Radiospammer",checkbox_state[2])
+	UI.SetValue("GS Watermark",checkbox_state[3])
+	UI.SetValue("GS Bar",checkbox_state[4])
+	UI.SetValue("Fakelagonkey",checkbox_state[5])
+	UI.SetValue("Fakelag key",hotkey_key[6]);
+	UI.SetValue("Doorspammer",hotkey_key[8]);
+	UI.SetValue("Doorspamonkey",checkbox_state[7]);
+	UI.SetValue("Preview Visuals", checkbox_state[9]);
+}
 function main(){
+	setupUI();
 	Global.RegisterCallback("Draw","onBackground");
 	Global.RegisterCallback("Draw", "drawBox");
 	Global.RegisterCallback("Draw", "drawName");
@@ -400,6 +434,7 @@ function main(){
 	Global.RegisterCallback("CreateMove","radiospammer");
 	Global.RegisterCallback("CreateMove","doorspam");
 	Global.RegisterCallback("CreateMove","fakelagonkey");
+	Global.RegisterCallback("CreateMove","setUIValues");
 	Global.RegisterCallback("Draw", "draw_gs_watermark");
 	Global.RegisterCallback("Draw","menu");
 }main();
