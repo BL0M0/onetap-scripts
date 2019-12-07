@@ -1,3 +1,10 @@
+//
+// This script was originally made by Yuca
+// (https://onetap.su/members/yuca.6427/)
+// Props to him for the original script!
+//
+
+
 function hsv_to_rgb(h, s, v)
 {
    var r, g, b, i, f, p, q, t;
