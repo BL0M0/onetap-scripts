@@ -229,17 +229,7 @@ function rainbow_bar(){
 	Render.FilledRect(0,0,screensize[0],2,[rgb.r,rgb.g,rgb.b,255])
 }
 
-function menu(){
-	if(!UI.IsMenuOpen())return;
-	checkbox_create("Rainbow",x+50,y+50,1);
-	checkbox_create("Radiospammer (broken?)",x+50,y+70,2);
-	checkbox_create("Gamesense Watermark",x+50,y+90,3);
-	checkbox_create("Gamesense bar",x+50,y+110,4);
-	checkbox_create("Fakelag on key", x + 50, y + 130, 5);
-	checkbox_create("Doorspam on key", x + 50, y + 150, 7);
-	hotkey_create(x+155,y+134,6);
-	hotkey_create(x+170,y+154,8);
-}
+
 function fakelagonkey(){
 	if(!checkbox_state[5])return;
 	if(Global.IsKeyPressed(hotkey_key[6]))UI.SetValue("Anti-Aim","Fake-Lag","Enabled",true);
@@ -255,8 +245,156 @@ function doorspam(){
 		Global.ExecuteCommand("-use");
 	}
 }
+var x = Global.GetScreenSize()[0]/4;
+var y = Global.GetScreenSize()[1]/3;
+function get(element){
+	return UI.GetValue("Script Items", element);
+}
+function getVisual(element){
+	return UI.GetValue("Visual","ENEMIES","ESP", element);
+}
+function getVisualColor(element){
+	return UI.GetColor("Visual","ENEMIES","ESP", element);
+}
+
+function drawBox(){if(!UI.IsMenuOpen())return;if(!checkbox_state[9])return;
+	if(!getVisual("Box"))return;
+	var color = getVisualColor("Box");
+	Render.Rect(x+50+250,y+65,150,280, [color[0],color[1],color[2],color[3]]);
+	Render.Rect(x+49+250,y+64,152,282, [0,0,0,255]);
+	Render.Rect(x+51+250,y+66,148,278, [0,0,0,255]);
+}
+function drawName(){if(!UI.IsMenuOpen())return;if(!checkbox_state[9])return;
+	if(!getVisual("Name"))return;
+	Render.String(x+125+250,y+50,1,"Jerry",getVisualColor("Name"),8);
+}
+function drawHealth(){if(!UI.IsMenuOpen())return;if(!checkbox_state[9])return;
+	if(!getVisual("Health")) return;
+	if(!getVisual("Health color override")){
+	
+		Render.FilledRect(x+42+250,y+65,2,280,[0,255,0,255]);
+		Render.Rect(x+41+250,y+64,4,282,[0,0,0,255]);
+	}
+	else{
+		Render.FilledRect(x+42+250,y+65,2,280,getVisualColor("Health color override"));
+		Render.Rect(x+41+250,y+64,4,282,[0,0,0,255]);
+	}
+}
+function drawWeapon(){if(!UI.IsMenuOpen())return;if(!checkbox_state[9])return;
+	if(getVisual("Weapon") == 0) return;
+	var type = getVisual("Weapon");
+	var weapon = function(y2){Render.String(x+125+250,y+y2,1,"KNIFE",[255,255,255,255],3);}
+	var icon = function(y2){Render.String(x+125+250,y+y2,1,"G",[255,255,255,255],6);}
+	if(!getVisual("Ammo")){
+		if(type == 1){
+			icon(282+65);
+		}
+		if(type == 2){
+			weapon(282+65);
+		}
+		if(type >= 3){
+			weapon(282+77);
+			icon(282+65);
+		}
+		
+	}
+	else{
+		if(type == 1){
+			icon(282+65+6);
+		}
+		if(type == 2){
+			weapon(282+65+6);
+		}
+		if(type >= 3){
+			weapon(282+77+6);
+			icon(282+65+6);
+		}
+		Render.Rect(x+49,y+64+280+4,152,4,[0,0,0,255]);
+		Render.FilledRect(x+50,y+65+280+4,150,2,getVisualColor("Ammo"));
+	}
+}
+function drawFlags(){if(!UI.IsMenuOpen())return;if(!checkbox_state[9])return;
+	var draw = function(text,height,color){
+		Render.String(x+52+150+250,
+					  y+height,0,text,
+					  [color[0],color[1],color[2],255],8);
+	}
+	var flag = getVisual("Flags");
+	if(flag == 0)return;
+	if(flag >= 1){
+		draw("$1337",65,[84,196,84]);
+		draw("LC",65+10,[255,255,255]);
+		draw("SCOPE",65+20,[255,255,255]);
+		draw("FLASH",65+30,[9,127,196]);
+		draw("R",65+40,[9,127,196]);
+	}
+}
+function drawSkeleton(){
+	if(!checkbox_state[9])return;
+	if(!UI.IsMenuOpen())return;
+	if(!getVisual("Skeleton"))return;
+	var color = getVisualColor("Skeleton");
+	//head and neck
+	Render.Line(x+125+250,y+90,x+127+250,y+110,color);
+	Render.Line(x+127+250,y+110,x+129+250,y+120,color);
+	//shoulders
+	//right
+	Render.Line(x+129+250,y+120,x+133+250,y+117,color);
+	Render.Line(x+133+250,y+117,x+160+250,y+115,color);
+	//left
+	Render.Line(x+129+250,y+120,x+115+250,y+115,color);
+	Render.Line(x+115+250,y+115,x+90+250,y+116,color);
+	//upper arm
+	//right
+	//160,115
+	Render.Line(x+160+250,y+115,x+162+250,y+150,color);
+	Render.Line(x+162+250,y+150,x+125+250,y+140,color);
+	//left
+	//90,115
+	Render.Line(x+90+250,y+115,x+87+250,y+147,color);
+	Render.Line(x+87+250,y+147,x+110+250,y+140,color);
+	
+	//neck down
+	//chest
+	Render.Line(x+129+250,y+120,x+133+250,y+160,color);
+	//stomach
+	Render.Line(x+133+250,y+160,x+133+250,y+190,color);
+	//pelvis and down
+	//left upper thigh
+	Render.Line(x+133+250,y+190,x+120+250,y+210,color);
+	//right upper thigh
+	Render.Line(x+133+250,y+190,x+150+250,y+220,color);
+	//left thigh
+	Render.Line(x+120+250,y+210,x+90+250,y+280,color);
+	//right thigh
+	Render.Line(x+150+250,y+220,x+155+250,y+282,color);
+	//left foot
+	Render.Line(x+90+250,y+280,x+94+250,y+303,color);
+	//right foot
+	Render.Line(x+155+250,y+282,x+167+250,y+320,color);
+}
+
+function menu(){
+	if(!UI.IsMenuOpen())return;
+	checkbox_create("Rainbow",x+50,y+50,1);
+	checkbox_create("Radiospammer (broken?)",x+50,y+70,2);
+	checkbox_create("Gamesense Watermark",x+50,y+90,3);
+	checkbox_create("Gamesense bar",x+50,y+110,4);
+	checkbox_create("Fakelag on key", x + 50, y + 130, 5);
+	checkbox_create("Doorspam on key", x + 50, y + 150, 7);
+	checkbox_create("Preview Visuals", x + 50, y + 170, 9);
+	hotkey_create(x+155,y+134,6);
+	hotkey_create(x+170,y+154,8);
+}
 function main(){
 	Global.RegisterCallback("Draw","onBackground");
+	Global.RegisterCallback("Draw", "drawBox");
+	Global.RegisterCallback("Draw", "drawName");
+	Global.RegisterCallback("Draw", "drawHealth");
+	Global.RegisterCallback("Draw", "drawWeapon");
+	Global.RegisterCallback("Draw", "drawFlags");
+	Global.RegisterCallback("Draw", "drawSkeleton");
+	Global.RegisterCallback("Draw", "drawPosition");
 	Global.RegisterCallback("Draw","drawPosition");
 	Global.RegisterCallback("Draw", "rainbow_bar");
 	Global.RegisterCallback("CreateMove","radiospammer");
