@@ -1,7 +1,3 @@
-
-
-// credit to estamaloka for most of the script's code
-
 function hsv_to_rgb(h, s, v)
 {
    var r, g, b, i, f, p, q, t;
