@@ -58,7 +58,7 @@ function draw_fatality_rect3(x3, y3, width3, height3)
 var fps = 0;
 var iterate = 0;
 var averagefps = 0;
-function draw_gs_watermark()
+function draw_gs_watermark() // credit to dude who already made it :D
 {
   var rgbcolor = hsv_to_rgb(Global.Realtime() * UI.GetValue("MISC", "JAVASCRIPT", "Script Items", "Gradient Speed"), 1, 1);
   var fps1 = 1 / Global.Frametime()
@@ -70,7 +70,11 @@ function draw_gs_watermark()
   if(iterate%100==0){fps=Math.floor(averagefps);}
   var watermark_name = Entity.GetName(Entity.GetLocalPlayer( ));
   var today = new Date();
-  var datetime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var hours = today.getHours();
+  var currenthours = hours % 12;
+  var pmamtext = hours >= 12 ? "pm" : "am";
+  var minutestext = today.getMinutes() >= 10 ? today.getMinutes(): "0" + today.getMinutes();
+  var datetime = currenthours + ":" + minutestext + " " + pmamtext;
   var screensize = Global.GetScreenSize();
     x1 = screensize[0]/1.06;
     y1 = screensize[1]/150;
