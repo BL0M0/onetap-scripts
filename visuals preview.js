@@ -83,7 +83,6 @@ function drawWeapon(){if(!UI.IsMenuOpen())return;
 	}
 }
 function drawFlags(){if(!UI.IsMenuOpen())return;
-	Global.Print(getVisual("Flags") + "\n");
 	var draw = function(text,height,color){
 		Render.String(get(x)+52+150,
 					  get(y)+height,0,text,
