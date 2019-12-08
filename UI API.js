@@ -99,23 +99,34 @@ var hotkey_create = function(xx,id){
 var waitUntilLetdown2 = false;
 var waitUntilLetdown = false;
 var first = 1;
-var orig_dimensions = [];
+var previous_cur = [];
+var was_clicked = false;
+var was_clicked2 = false;
 var create_window = function( label, dimension, colo , allowResize ){
 	var cur = Global.GetCursorPosition();
 	if(first == 1){
-		orig_dimensions = dimension;
 		dimensions = dimension;
 		first=0;
 	}
+	if(!Global.IsKeyPressed(0x01))was_clicked = true;
+	if(Global.IsKeyPressed(0x01) && was_clicked){
+		previous_cur = Global.GetCursorPosition();
+		previous_cur[0] = previous_cur[0] % x;
+		previous_cur[1] = previous_cur[1] % y; // i just yolo'd this LMAO
+		was_clicked = false;
+	}
+	
+	Global.Print("Prev: " + previous_cur + ", Cur: " + cur + "\n");
+	
 	
 	if(Global.IsKeyPressed(0x01) && cur[0] > x && cur[0] < dimension[0]+x && cur[1] > y && cur[1] < 40+y){
-		x = cur[0] - (dimension[0]/2);
-		y = cur[1] - 20;
+		x = cur[0] - previous_cur[0];
+		y = cur[1] - previous_cur[1];
 		waitUntilLetdown = true;
 	}
 	if(waitUntilLetdown){
-		x = cur[0] - (dimension[0]/2);
-		y = cur[1] - 20;
+		x = cur[0] - previous_cur[0];
+		y = cur[1] - previous_cur[1];
 		if(!Global.IsKeyPressed(0x01))waitUntilLetdown = false;
 	}
 	
