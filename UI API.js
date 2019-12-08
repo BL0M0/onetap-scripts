@@ -116,8 +116,6 @@ var create_window = function( label, dimension, colo , allowResize ){
 		was_clicked = false;
 	}
 	
-	Global.Print("Prev: " + previous_cur + ", Cur: " + cur + "\n");
-	
 	
 	if(Global.IsKeyPressed(0x01) && cur[0] > x && cur[0] < dimension[0]+x && cur[1] > y && cur[1] < 40+y){
 		x = cur[0] - previous_cur[0];
