@@ -4,12 +4,17 @@ var color = [];
 var dimensions = [];
 var checkbox_state = [];
 var checkbox_waitforunclick = [];
+var hotkey_id_should_move_back = [];
 var checkbox_create = function(name,id){
 	var xx = x + 30;
 	var yy = y + (id*20) + 30;
-	if(yy > y+dimensions[1]-20)yy = y + (6-id*20)+422,xx = xx + 140;
+	var antiweird = false;
+	if(yy > y+dimensions[1]-20){yy = y + (6-id*20)+422,xx = xx + dimensions[0]/2;antiweird = true;};
 	if(yy > y+dimensions[1]-20)return;
-	//if(yy > y+dimensions[1]-20)yy = y + (id-8*20)-110,xx=xx+140;
+	var size = Render.TextSize(name);;
+	if(size[0]+70 > dimensions[0]){name = "..";hotkey_id_should_move_back[id] = true;}
+	if(size[0]+70 > dimensions[0] + (dimensions[0]/2)){name = "..";hotkey_id_should_move_back[id] = true;}
+	else hotkey_id_should_move_back[id] = false;
 		var cur = Global.GetCursorPosition();
 		var colorDeselected = [31,33,37,255];
 		var hovered = [56,60,67,255];
@@ -35,9 +40,15 @@ var checkbox_create = function(name,id){
 			checkbox_waitforunclick[id] = true;
 		}
 		if(checkbox_state[id])colorDeselected = color;
+		if(!antiweird){
 		Render.FilledRect(xx,yy,10,10,colorDeselected);
 		Render.Rect(xx-1,yy-1,12,12,hovered);
 		Render.String(xx+13,yy-2,0,name,[255,255,255,255],7);
+		}else{
+		Render.FilledRect(xx,yy,10,10,colorDeselected);
+		Render.Rect(xx-1,yy-1,12,12,hovered);
+		Render.String(xx+13/2,yy-2,0,name,[255,255,255,255],7);
+		}
 	}
 function getKeyPressed(){
 	for(i = 0; i < 0xA3; i++){
@@ -63,9 +74,12 @@ var slider_create = function(name,id,min,max){
 var hotkey_key = [];
 var hotkey_waitforunclick = [];
 var hotkey_create = function(xx,id){
+	var cur = Global.GetCursorPosition();
 	var yy = y + (id*20) + 30;
 	if(yy > y+dimensions[1]-20)return;
-	var cur = Global.GetCursorPosition();
+	if(hotkey_id_should_move_back[id])xx = x + 50;
+	var e = dimensions;
+	if(80 < e) return;
 	var colorDeselected = [31,33,37,255];
 	var hovered = [56,60,67,255];
 	if(hotkey_waitforunclick[id]){
@@ -181,9 +195,12 @@ function menu(){
 	if(!UI.IsMenuOpen())return;
 	create_window("GUI Label",[300,200],[255,255,255,255],true);
 	checkbox_create("GUI Checkbox",1);
-	checkbox_create("GUI Checkbox",2);
+	checkbox_create("GUI Chasdfsaseckbox",2);
 	checkbox_create("GUI Checkbox",3);
-	hotkey_create(x+130,2);
+	for(i = 4; i < 20; i++){
+		checkbox_create("GUI Checkbox",i);
+	}
+	hotkey_create(x+170,2);
 	hotkey_create(x+130,3);
 	hotkey_create(x+130,1);
 	if(Global.IsKeyPressed(hotkey_key[1])){Global.Print(hotkey_key[1] + " is pressed\n");}
