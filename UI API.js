@@ -64,6 +64,7 @@ var hotkey_key = [];
 var hotkey_waitforunclick = [];
 var hotkey_create = function(xx,id){
 	var yy = y + (id*20) + 30;
+	if(yy > y+dimensions[1]-20)return;
 	var cur = Global.GetCursorPosition();
 	var colorDeselected = [31,33,37,255];
 	var hovered = [56,60,67,255];
