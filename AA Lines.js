@@ -35,6 +35,6 @@ function drawLines(){
 	Render.Line(Render.WorldToScreen(origin)[0],Render.WorldToScreen(origin)[1],Render.WorldToScreen(endreal)[0],Render.WorldToScreen(endreal)[1],[255,255,255,255]);
 	Render.Line(Render.WorldToScreen(origin)[0],Render.WorldToScreen(origin)[1],Render.WorldToScreen(fakereal)[0],Render.WorldToScreen(fakereal)[1],UI.GetColor("Visual","SELF","Chams","Desync Color"));
 	Render.String(Render.WorldToScreen(endreal)[0]-15,Render.WorldToScreen(endreal)[1],0,"REAL",[255,255,255,255],7);
-	Render.String(Render.WorldToScreen(fakereal)[0]-15,Render.WorldToScreen(fakereal)[1],0,"REAL",[255,255,255,255],7);
+	Render.String(Render.WorldToScreen(fakereal)[0]-15,Render.WorldToScreen(fakereal)[1],0,"FAKE",[255,255,255,255],7);
 	
 }Cheat.RegisterCallback("Draw","drawLines")
