@@ -85,8 +85,8 @@ function draw_gs_watermark() // credit to dude who already made it :D
     draw_fatality_rect2(x1 - 150, y1, 140, 35);
     draw_fatality_rect3(x1 - 300, y1, 140, 35);
 	Render.GradientRect(x1-100,y1+6,190,2,1,[255, 165, 0, 150], [ 65,105,225, 255]);
-    Render.String( x1 + -64, y1 + 10, 0, "sense", [ 166, 243, 65, 255], 8 );
-    Render.String( x1 + -96, y1 + 10, 0, "game", [ 255, 255, 255, 255], 8 );
+    Render.String( x1 + -64, y1 + 10, 0, "tap", [ 166, 243, 65, 255], 8 );
+    Render.String( x1 + -96, y1 + 10, 0, "one", [ 255, 255, 255, 255], 8 );
     Render.String( x1 + -28, y1 + 10, 0, "|", [ 255, 255, 255, 255], 8 );
     Render.String( x1 - 20, y1 + 10, 0, "" + fps, [ 166, 243, 65, 255], 8 );
     Render.String( x1 + 5, y1 + 10, 0, "fps |", [ 255, 255, 255, 255], 8 );
